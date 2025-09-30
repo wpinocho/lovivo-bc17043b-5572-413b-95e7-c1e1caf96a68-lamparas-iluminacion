@@ -5,17 +5,9 @@ import { SocialLinks } from '@/components/SocialLinks'
 import { FloatingCart } from '@/components/FloatingCart'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
-import { ShoppingCart } from 'lucide-react'
+import { ShoppingCart, Lightbulb } from 'lucide-react'
 import { useCartUI } from '@/components/CartProvider'
 import { useCart } from '@/contexts/CartContext'
-import { Input } from '@/components/ui/input'
-
-/**
- * EDITABLE TEMPLATE - EcommerceTemplate
- * 
- * Template específico para páginas de ecommerce con header, footer y cart.
- * El agente IA puede modificar completamente el diseño, colores, layout.
- */
 
 interface EcommerceTemplateProps {
   children: ReactNode
@@ -41,28 +33,32 @@ export const EcommerceTemplate = ({
   const totalItems = getTotalItems()
 
   const header = (
-    <div className={`py-4 ${headerClassName}`}>
+    <div className={`py-4 bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm ${headerClassName}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center">
-            <Link to="/">
-              <BrandLogoLeft />
-            </Link>
-          </div>
+          <Link to="/" className="flex items-center gap-2 group">
+            <div className="bg-gradient-to-br from-amber-400 to-orange-500 p-2 rounded-lg shadow-md group-hover:shadow-lg transition-shadow">
+              <Lightbulb className="h-6 w-6 text-white" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold text-foreground">LuxLamp</h1>
+              <p className="text-xs text-muted-foreground">Iluminación Premium</p>
+            </div>
+          </Link>
 
           {/* Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             <nav className="flex space-x-6">
               <Link 
                 to="/" 
-                className="text-foreground/70 hover:text-foreground transition-colors"
+                className="text-foreground/70 hover:text-foreground font-medium transition-colors"
               >
-                Home
+                Inicio
               </Link>
               <Link 
                 to="/blog" 
-                className="text-foreground/70 hover:text-foreground transition-colors"
+                className="text-foreground/70 hover:text-foreground font-medium transition-colors"
               >
                 Blog
               </Link>
@@ -72,14 +68,14 @@ export const EcommerceTemplate = ({
           {/* Cart */}
           {showCart && (
             <Button
-              variant="ghost"
+              variant="outline"
               size="icon"
               onClick={openCart}
-              className="relative"
+              className="relative border-2 border-foreground hover:bg-foreground hover:text-white transition-all"
             >
               <ShoppingCart className="h-5 w-5" />
               {totalItems > 0 && (
-                <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 bg-amber-500 text-white text-xs font-bold rounded-full h-6 w-6 flex items-center justify-center shadow-lg">
                   {totalItems > 99 ? '99+' : totalItems}
                 </span>
               )}
@@ -100,26 +96,36 @@ export const EcommerceTemplate = ({
   )
 
   const footer = (
-    <div className={`bg-black text-white py-12 ${footerClassName}`}>
+    <div className={`gradient-dark text-white py-16 ${footerClassName}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
-          <div>
-            <BrandLogoLeft />
-            <p className="mt-4 text-white/70">
-              Your trusted online store
+          <div className="md:col-span-2">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="bg-gradient-to-br from-amber-400 to-orange-500 p-2 rounded-lg">
+                <Lightbulb className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold">LuxLamp</h3>
+                <p className="text-sm text-white/70">Iluminación Premium</p>
+              </div>
+            </div>
+            <p className="text-white/80 leading-relaxed mb-6">
+              Transformamos espacios con lámparas de diseño exclusivo. 
+              Calidad premium, envío gratis y garantía extendida en todos nuestros productos.
             </p>
+            <SocialLinks />
           </div>
 
           {/* Links */}
           <div>
-            <h3 className="font-semibold mb-4 text-white">Links</h3>
-            <div className="space-y-2">
+            <h3 className="font-bold mb-4 text-white text-lg">Navegación</h3>
+            <div className="space-y-3">
               <Link 
                 to="/" 
                 className="block text-white/70 hover:text-white transition-colors"
               >
-                Home
+                Inicio
               </Link>
               <Link 
                 to="/blog" 
@@ -130,15 +136,22 @@ export const EcommerceTemplate = ({
             </div>
           </div>
 
-          {/* Social Links */}
+          {/* Info */}
           <div>
-            <h3 className="font-semibold mb-4 text-white">Follow Us</h3>
-            <SocialLinks />
+            <h3 className="font-bold mb-4 text-white text-lg">Información</h3>
+            <div className="space-y-3 text-white/70 text-sm">
+              <p>📦 Envío gratis en todos los pedidos</p>
+              <p>🛡️ Garantía extendida de 2 años</p>
+              <p>💡 LED incluido en todas las lámparas</p>
+              <p>⚡ Ahorro energético garantizado</p>
+            </div>
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-white/20 text-center text-white/70">
-          <p>&copy; 2024 Your Store. All rights reserved.</p>
+        <div className="pt-8 border-t border-white/20 text-center">
+          <p className="text-white/60 text-sm">
+            &copy; 2024 LuxLamp. Todos los derechos reservados. Iluminación de diseño premium.
+          </p>
         </div>
       </div>
     </div>
